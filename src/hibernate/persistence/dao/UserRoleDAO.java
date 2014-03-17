@@ -7,6 +7,7 @@ package hibernate.persistence.dao;
 
 import hibernate.persistence.entities.Role;
 import hibernate.persistence.entities.User;
+import hibernate.persistence.entities.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -42,11 +43,11 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
     public void addRole(User user, Role role) throws Exception {
        try {
             
-            if !(hasRole(role, user)){
+            if (!hasRole(user, role)){
               UserRole userrole1 = new UserRole(); 
               userrole1.setRoleid(role.getID());
               userrole1.setUserid(user.getId());
-              dao_userrole.save(userrole1);
+              save(userrole1);
             }
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
