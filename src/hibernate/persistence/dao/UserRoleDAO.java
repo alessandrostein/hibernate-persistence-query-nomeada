@@ -45,7 +45,17 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     @Override
     public void removeRole(User user, Role role) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query q = session.getNamedQuery(getNamedQueryToRemoveRole());
+            q.setInteger("roleid", role.getId());
+            q.setInteger("userid", user.getId());
+            q.executeUpdate();
+        } catch (HibernateException e) {
+            throw new Exception(e.getCause().getMessage());
+        } finally {
+            releaseSession(session);
+        }
     }
 
     @Override
@@ -92,6 +102,10 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
     
     protected String getNamedQueryToHasRole() {
         return "userrole.has.role";
+    }
+    
+    protected String getNamedQueryToRemoveRole() {
+        return "userrole.remove.role";
     }
 
     @Override
