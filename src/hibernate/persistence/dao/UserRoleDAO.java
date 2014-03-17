@@ -48,7 +48,7 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
        try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query q = session.getNamedQuery(getNamedQueryToRemoveRole());
-            q.setInteger("roleid", role.getId());
+            q.setInteger("roleid", role.getID());
             q.setInteger("userid", user.getId());
             q.executeUpdate();
         } catch (HibernateException e) {
@@ -63,7 +63,7 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query q = session.getNamedQuery(getNamedQueryToHasRole());
-            q.setInteger("roleid", role.getId());
+            q.setInteger("roleid", role.getID());
             q.setInteger("userid", user.getId());
             Object o = q.uniqueResult();
             
