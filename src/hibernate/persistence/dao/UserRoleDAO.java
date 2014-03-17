@@ -35,12 +35,24 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     @Override
     public Object getNewInstance() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new UserDAO();
     }
 
     @Override
     public void addRole(User user, Role role) throws Exception {
-        
+       try {
+            
+            if !(hasRole(role, user)){
+              UserRole userrole1 = new UserRole(); 
+              userrole1.setRoleid(role.getID());
+              userrole1.setUserid(user.getId());
+              dao_userrole.save(userrole1);
+            }
+        } catch (HibernateException e) {
+            throw new Exception(e.getCause().getMessage());
+        } finally {
+            releaseSession(session);
+        }  
     }
 
     @Override
