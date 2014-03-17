@@ -1,0 +1,2 @@
+hibernate-persistence-query-nomeada
+===================================
