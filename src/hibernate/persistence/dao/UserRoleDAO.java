@@ -50,7 +50,23 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     @Override
     public boolean hasRole(User user, Role role) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query q = session.getNamedQuery(getNamedQueryToHasRole());
+            q.setInteger("roleid", role.getId());
+            q.setInteger("userid", user.getId());
+            Object o = q.uniqueResult();
+            
+            if (o != null){
+               return false;
+            }else
+            {
+               return true;
+            }
+      
+        } catch (HibernateException e) {
+            throw new Exception(e.getCause().getMessage());
+        }
     }
 
     @Override
@@ -72,6 +88,10 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     protected String getNamedQueryToFindUser() {
         return "userrole.find.user";
+    }
+    
+    protected String getNamedQueryToHasRole() {
+        return "userrole.has.role";
     }
 
     @Override
