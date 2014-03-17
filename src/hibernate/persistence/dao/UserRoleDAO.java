@@ -27,7 +27,6 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
             Query q = session.getNamedQuery(getNamedQueryToFindUser());
             q.setInteger("id", o.getID());
             List lst = q.list();
-            session.getTransaction().commit();
             return (ArrayList) lst;
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
@@ -41,7 +40,7 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     @Override
     public void addRole(User user, Role role) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -61,7 +60,6 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
             Query q = session.getNamedQuery(getNamedQueryToFindRole());
             q.setInteger("id", o.getId());
             List lst = q.list();
-            session.getTransaction().commit();
             return (ArrayList) lst;
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
@@ -78,7 +76,7 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     @Override
     protected String getNamedQueryToFindAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "userrole.find.all";
     }
 
     @Override
