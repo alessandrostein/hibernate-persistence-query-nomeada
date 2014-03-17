@@ -125,12 +125,12 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
     @Override
     protected String getNamedQueryToCountAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "userrole.count.all";
     }
 
     @Override
     protected String getNamedQueryToRemoveAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "userrole.remove.all";
     }
 
     @Override
