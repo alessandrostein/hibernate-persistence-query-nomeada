@@ -29,8 +29,8 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name = "userrole.id.equals", query = "SELECT o FROM UserRole o WHERE o.id=:id"),
     @NamedQuery(name = "userrole.find.all", query = "SELECT o FROM UserRole o"),
     @NamedQuery(name = "userrole.find.user", query = "SELECT o FROM UserRole o WHERE o.userid=:id"),
-    @NamedQuery(name = "userrole.find.role", query = "SELECT o FROM UserRole o WHERE o.roleid=:id")
-
+    @NamedQuery(name = "userrole.find.role", query = "SELECT o FROM UserRole o WHERE o.roleid=:id"),
+    @NamedQuery(name = "userrole.has.role", query = "SELECT o FROM UserRole o WHERE o.roleid=:roleid AND o.userid=:userid")
     /*@NamedQuery(name = "userrole.count.all", query = "SELECT COUNT(o.id) FROM UserRole o"),
     @NamedQuery(name = "userrole.count.all.user", query = "SELECT COUNT(o.id) FROM UserRole o WHERE o.userId=:id"),
     @NamedQuery(name = "userrole.count.all.role", query = "SELECT COUNT(o.id) FROM UserRole o WHERE o.roleId=:id"),
