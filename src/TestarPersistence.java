@@ -11,54 +11,65 @@ public class TestarPersistence {
 
     public static void main(String[] args) {
         try {
-            createUsersRoles();
+            User user = createUsers("User 1");
+            Role role = createRoles("Regra 1");
+            
+            createUsersRoles(role, user);
+            
             showAllUser();
             showAllRole();
             showAllUserRole();
+            
+            showUserFindRole(role);
+            
+            addNewRole(user);
+            
+            removeRole(role, user);
+            
+            hasRole(user, role);
+            
+            findRoles(user);
+            
         } catch (Exception ex) {
             System.out.println("A tentativa de criar usuários falhou!/n... " + ex.getMessage());
         }
 
     }
 
-    private static void createUsersRoles() throws Exception {
-        RoleDAO dao_role = new RoleDAO();
-        UserDAO dao_user = new UserDAO();
-        UserRoleDAO dao_userrole = new UserRoleDAO();
-
-        System.out.println("Remove todas as regras...");
-        dao_role.removeAll();
-
-        System.out.println("Remove todos os usuarios...");
-        dao_user.removeAll();
-
-        System.out.println("Cria novas regras...");
-        Role role1 = new Role();
-        role1.setName("Regra 1");
-        dao_role.save(role1);
+    private static User createUsers(String name) throws Exception {
+        UserDAO dao_user = new UserDAO();     
 
         System.out.println("Cria novos usuarios...");
-        User user1 = new User();
-        user1.setName("Usuario 1");
-        dao_user.save(user1);
 
+        User user1 = new User();
+        user1.setName(name);
+        dao_user.save(user1);
+        
+        return user1;
+    }
+    
+    private static Role createRoles(String name) throws Exception {
+        RoleDAO dao_role = new RoleDAO();
+        
+        System.out.println("Cria novas regras...");
+        
+        Role role1 = new Role();
+        role1.setName(name);
+        dao_role.save(role1);
+        
+        return role1;
+        
+    }
+    
+    private static void createUsersRoles(Role role1, User user1) throws Exception {
+        UserRoleDAO dao_userrole = new UserRoleDAO();
+        
         System.out.println("Criando relacionamento...");
         UserRole userrole1 = new UserRole();
         userrole1.setRoleid(role1.getID());
         userrole1.setUserid(user1.getId());
         dao_userrole.save(userrole1);
-
-        System.out.println("Cria nova regra...");
-        Role role2 = new Role();
-        role2.setName("Regra 2");
-        dao_role.save(role2);
-
-        System.out.println("Adiciona regra a usuario...");
-        dao_userrole.addRole(user1, role2);
-
-        showUserFindRole(role2);
         
-        System.out.println(" OK!");
     }
 
     private static void showAllUser() throws Exception {
@@ -90,6 +101,7 @@ public class TestarPersistence {
     private static void showAllUserRole() throws Exception {
         System.out.println("Listando usuários e regras ...");
         UserRoleDAO dao = new UserRoleDAO();
+
         ArrayList userrole = (ArrayList) dao.findAll();
         UserRole o;
 
@@ -112,5 +124,40 @@ public class TestarPersistence {
         }
 
     }
+    
+    private static void addNewRole(User user) throws Exception {
+        System.out.println("Adicionando regras a usuários...");
+        UserRoleDAO userrole = new UserRoleDAO();
+        
+        Role role = createRoles("Regra 2");
+        
+        userrole.addRole(user, role);
+        
+    }
+    
+    private static void removeRole(Role role, User user) throws Exception {
+        System.out.println("Removendo regras...");
+        UserRoleDAO userrole = new UserRoleDAO();
+        userrole.removeRole(user, role);
+    }
+    
+    private static void hasRole(User user, Role role) throws Exception {
+        System.out.println("Verificando regras...");
+        UserRoleDAO userrole = new UserRoleDAO();
+        userrole.hasRole(user, role);
+    }
 
+    private static void findRoles(User user) throws Exception {
+       System.out.println("Listando Regras dos usuários...");
+        
+        UserRoleDAO userrole = new UserRoleDAO();
+        ArrayList listrole = (ArrayList) userrole.findRole(user);
+        Role role;
+        
+        for (int i = 0; i < listrole.size(); i++) {
+            role = (Role) listrole.get(i);
+            System.out.println(role);
+        }
+        
+    }
 }
