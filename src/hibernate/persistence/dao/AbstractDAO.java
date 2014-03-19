@@ -73,7 +73,6 @@ public abstract class AbstractDAO implements IDAO{
     public Object find(String id) throws Exception {
          try {
             session = HibernateUtil.getSessionFactory().openSession();
-            //Query q = session.getNamedQuery("id.igual");
             Query q = session.getNamedQuery(getNamedQueryToFindById());
             q.setString("id", id.toString());
             Object o = q.uniqueResult();
@@ -90,7 +89,6 @@ public abstract class AbstractDAO implements IDAO{
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            //Query q = session.getNamedQuery("find.all");
             Query q = session.getNamedQuery(getNamedQueryToFindAll());
             List lst = q.list();
             session.getTransaction().commit();
@@ -107,7 +105,6 @@ public abstract class AbstractDAO implements IDAO{
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            //Query q = session.getNamedQuery("find.all");
             Query q = session.getNamedQuery(getNamedQueryToFindByRange());
             q.setFirstResult(firstResult);
             q.setMaxResults(maxResults);
@@ -125,7 +122,6 @@ public abstract class AbstractDAO implements IDAO{
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            //Query q = session.getNamedQuery("count.all");
             Query q = session.getNamedQuery(getNamedQueryToCountAll());
             Long count = (Long) q.uniqueResult();
             session.getTransaction().commit();
@@ -142,7 +138,6 @@ public abstract class AbstractDAO implements IDAO{
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            //Query q = session.getNamedQuery("count.all");
             Query q = session.getNamedQuery(getNamedQueryToRemoveAll());
             q.executeUpdate();
             session.getTransaction().commit();

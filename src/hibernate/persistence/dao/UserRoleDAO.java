@@ -19,8 +19,6 @@ import org.hibernate.Query;
  */
 public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
 
-   // private Session session;
-
     @Override
     public List findUser(Role o) throws Exception {
         try {
