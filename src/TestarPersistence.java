@@ -11,6 +11,8 @@ public class TestarPersistence {
 
     public static void main(String[] args) {
         try {
+            long tempoInit = System.currentTimeMillis();
+
             // Remove todas as regras
             removeAllRoles();
             // Remove todos os usuarios
@@ -42,6 +44,9 @@ public class TestarPersistence {
             hasRole(user, role1);
             // Busca todas as regras que tenham o usuario
             findRoles(user);
+            
+            long tempoFinish = System.currentTimeMillis();
+            System.out.println("Tempo de execução = " +  (tempoFinish - tempoInit)/1000.0 + "s");
                     
         } catch (Exception ex) {
             System.out.println("A tentativa de criar usuários falhou!/n... " + ex.getMessage());
@@ -160,12 +165,16 @@ public class TestarPersistence {
     private static void findRoles(User user) throws Exception {
         System.out.println("Listando Regras dos usuários...");
 
-        UserRoleDAO userrole = new UserRoleDAO();
-        ArrayList listrole = (ArrayList) userrole.findRole(user);
+        UserRoleDAO dao_userrole = new UserRoleDAO();
+        UserRole userrole;
+        ArrayList listrole = (ArrayList) dao_userrole.findRole(user);
+        
+        RoleDAO dao_role = new RoleDAO();
         Role role;
 
         for (int i = 0; i < listrole.size(); i++) {
-            role = (Role) listrole.get(i);
+            userrole = (UserRole) listrole.get(i);
+            role = (Role) dao_role.find(String.valueOf(userrole.getRoleid()));
             System.out.println(role);
         }
 
