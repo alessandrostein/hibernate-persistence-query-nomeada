@@ -25,7 +25,7 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
     public List findUser(Role o) throws Exception {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query q = session.getNamedQuery(getNamedQueryToFindUser());
+            Query q = session.getNamedQuery(getNamedQueryToFindRole());
             q.setInteger("id", o.getID());
             List lst = q.list();
             return (ArrayList) lst;
@@ -96,7 +96,7 @@ public class UserRoleDAO extends AbstractDAO implements IRoleDAO, IUserDAO {
     public ArrayList findRole(User o) throws Exception {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query q = session.getNamedQuery(getNamedQueryToFindRole());
+            Query q = session.getNamedQuery(getNamedQueryToFindUser());
             q.setInteger("id", o.getId());
             List lst = q.list();
             return (ArrayList) lst;
